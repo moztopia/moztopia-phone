@@ -1,0 +1,15 @@
+{
+    "name": "moztopia/phone",
+    "description": "A small, predictable international telephone-number SDK for Laravel.",
+    "type": "library",
+    "license": "Apache-2.0",
+    "require": {
+        "php": "~8.3.36 || ~8.4.27 || ~8.5.12",
+        "giggsey/libphonenumber-for-php": "^9.0.43"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

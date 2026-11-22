@@ -82,6 +82,12 @@ it('uses conventional required, nullable and non-implicit validation', function 
     ['', [], true], ['', ['phone' => ''], true], ['', ['phone' => 'bad'], false],
 ]);
 
+it('distinguishes Laravel facade forwarding from a direct strict service caller', function () {
+    expect(Phone::isValid(812345678, 'TH'))->toBe(Phone::isValid('812345678', 'TH'));
+    $service = $this->app->make(PhoneService::class);
+    expect(fn () => $service->isValid(812345678, 'TH'))->toThrow(TypeError::class);
+});
+
 it('rejects framework mixed values without scalar coercion', function (mixed $value) {
     $validator = Validator::make(['phone' => $value], ['phone' => [new ValidPhone(region: 'TH')]]);
     expect($validator->fails())->toBeTrue();

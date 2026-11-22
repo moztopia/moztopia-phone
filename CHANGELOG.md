@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1 — unreleased
+
+- Clarify Laravel facade forwarding versus direct typed-service scalar enforcement in agent instructions.
+- Record the observed framework forwarding behavior with a regression test; SDK runtime behavior is unchanged.
+
 ## 0.3.0 — unreleased
 
 - Add compatibility CI, isolated PHP CLI testing, clean Laravel installation verification and independent-agent acceptance guidance.

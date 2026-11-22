@@ -1,8 +1,8 @@
 # Verification evidence
 
-Source 0.3.0 prepares the initial package for reviewed release. No Git tag, GitHub release or Packagist publication is authorized. The specification document version is 1.0; source integrations follow the numeric source policy.
+Source 0.3.1 prepares the initial package for reviewed release. No Git tag, GitHub release or Packagist publication is authorized. The specification document version is 1.0; source integrations follow the numeric source policy.
 
-## Local compatibility matrix
+## Local compatibility matrix at source 0.3.0
 
 All six combinations below passed strict Composer validation, 96 Pest tests / 502 assertions, maximum-level PHPStan and Pint. Each dependency set was resolved separately with Composer update (lowest uses --prefer-lowest --prefer-stable), then verification ran in an isolated Docker CLI container with network disabled. Engine: libphonenumber-for-php 9.0.43 in every set.
 
@@ -44,6 +44,10 @@ The maintainer's revised clean-app procedure passed all 17 checks in a fresh Lar
 All 11 executable PHP blocks in README, AGENTS and the two wiki guides ran successfully against the installed clean app. The documented model method snippets were evaluated in their stated model context. The four wiki Markdown files were rendered locally with League CommonMark; relative wiki targets and source-file links were checked. Generated HTML is kept under ignored .verification/wiki-render. No browser was used to create or test the wiki; browser-level presentation was not claimed.
 
 [GitHub Actions run 45046902154](https://github.com/moztopia/moztopia-phone/actions/runs/45046902154) passed all seven jobs at candidate commit 1f7e0c097fbee97163431796fc346cd5a6aa75f7: six PHP/dependency combinations plus genuine clean-app installation and source guide execution. Actionlint also passed. Subsequent verification-record updates do not change the SDK implementation; the final PR/issue records the reviewed head, its checks, integrated source and published wiki revision.
+
+## Final scalar-typing clarification
+
+A strict-file runtime audit additionally confirmed that Laravel facade magic forwarding may coerce scalar values before typed service dispatch. Direct constructor-injected PhoneService calls enforce their string signatures under a strict caller. Agent instructions and the wiki now explicitly recommend direct typed-service calls for that guarantee, while rules/casts reject mixed values through their framework interfaces. Source patch 0.3.1 adds a regression test and documentation only; src/ runtime files are unchanged from the fully verified 0.3.0 integration. Final patch test counts and CI revisions are recorded on issue #5.
 
 ## Release readiness
 

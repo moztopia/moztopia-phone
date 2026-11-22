@@ -37,8 +37,18 @@ The independent run first exposed recursive path-mirroring of generated acceptan
 - Composer runtime dependencies are the explicitly used Illuminate 13 components, ctype/mbstring and libphonenumber-for-php ^9.0.43. Dev tools remain require-dev. Apache-2.0 LICENSE, NOTICE and retained inspected engine/locale licenses are present. Source archives exclude generated apps, vendor, caches, local wiki and lockfiles.
 - The confirmed wiki is edited only in the ignored local wiki/ Git repository. Local CommonMark rendering/link checks and the eventual wiki revision are recorded on the implementation issue. No browser wiki work is performed.
 
-## Final gates pending at this checkpoint
+## Clean application, examples and CI
 
-The maintainer clean-app rerun and remote GitHub Actions verification are in progress. Local six-way compatibility and the separate agent clean-app run have passed. Final CI, clean-app, wiki publication and source integration evidence will be appended before completion is claimed.
+The maintainer's revised clean-app procedure passed all 17 checks in a fresh Laravel 13.43.0 application on PHP 8.4.27, using a staged source-only path mirror and normal Composer discovery. The installed runtime checks were repeated with Docker --network none and passed. The separate agent independently installed another clean app and passed its own 44 checks.
+
+All 11 executable PHP blocks in README, AGENTS and the two wiki guides ran successfully against the installed clean app. The documented model method snippets were evaluated in their stated model context. The four wiki Markdown files were rendered locally with League CommonMark; relative wiki targets and source-file links were checked. Generated HTML is kept under ignored .verification/wiki-render. No browser was used to create or test the wiki; browser-level presentation was not claimed.
+
+[GitHub Actions run 45046902154](https://github.com/moztopia/moztopia-phone/actions/runs/45046902154) passed all seven jobs at candidate commit 1f7e0c097fbee97163431796fc346cd5a6aa75f7: six PHP/dependency combinations plus genuine clean-app installation and source guide execution. Actionlint also passed. Subsequent verification-record updates do not change the SDK implementation; the final PR/issue records the reviewed head, its checks, integrated source and published wiki revision.
+
+## Release readiness
+
+The implemented public API, integration tests, local compatibility matrix, executable documentation, independent-agent scenario, licenses and clean installation meet the technical acceptance requirements. README is intentionally brief and the wiki is authoritative under the owner's later clarification. Remaining inherent limits are explicit: metadata cannot prove ownership/reachability, supported extraction coverage follows upstream boundaries, no strict CPU-time guarantee exists, and weak PHP callers can coerce scalar arguments. The recorded lowest-dependency upstream deprecation is not suppressed.
+
+Initial source is prepared for a reviewed release. Git tags, GitHub releases and Packagist publication remain prohibited pending explicit owner authorization. Repository/Project closure is completed only after final source integration and local-Git wiki publication are verified, with exact revisions on issue #5.
 
 by-dolly

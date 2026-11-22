@@ -5,11 +5,55 @@
     "license": "Apache-2.0",
     "require": {
         "php": "~8.3.36 || ~8.4.27 || ~8.5.12",
-        "giggsey/libphonenumber-for-php": "^9.0.43"
+        "giggsey/libphonenumber-for-php": "^9.0.43",
+        "ext-mbstring": "*",
+        "illuminate/contracts": "^13.0",
+        "illuminate/support": "^13.0"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "homepage": "https://github.com/moztopia/moztopia-phone",
+    "keywords": [
+        "laravel",
+        "phone",
+        "validation",
+        "e164",
+        "libphonenumber"
+    ],
+    "support": {
+        "issues": "https://github.com/moztopia/moztopia-phone/issues",
+        "source": "https://github.com/moztopia/moztopia-phone"
+    },
+    "autoload": {
+        "psr-4": {
+            "Moztopia\\Phone\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Moztopia\\Phone\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.25",
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^3.8",
+        "phpstan/phpstan": "^2.1"
+    },
+    "scripts": {
+        "test": "pest",
+        "lint": "pint --test",
+        "analyse": "phpstan analyse --memory-limit=512M"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "0.x-dev"
+        }
+    }
 }

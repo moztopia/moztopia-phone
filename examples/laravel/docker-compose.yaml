@@ -1,0 +1,21 @@
+name: moztopia-phone-examples
+
+services:
+  server:
+    container_name: moztopia-phone-examples_server
+    image: moztopia-phone-examples:local
+    build:
+      context: ../..
+      dockerfile: examples/laravel/.docker/server/server.Dockerfile
+    ports:
+      - '127.0.0.1:8080:8000'
+    tmpfs:
+      - /app/storage:mode=1777
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    ipam:
+      config:
+        - subnet: '${PHONE_EXAMPLE_SUBNET:-10.253.247.0/28}'

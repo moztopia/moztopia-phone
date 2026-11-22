@@ -3,10 +3,10 @@ name: Package checks
 on:
   push:
     branches: [develop, 'wip/**']
-    paths: ['src/**', 'tests/**', 'lang/**', 'tools/**', 'composer.json', 'phpunit.xml', 'phpstan.neon', 'pint.json', 'README.md', 'AGENTS.md', 'VERSION', '.github/workflows/tests.yaml']
+    paths: ['src/**', 'tests/**', 'lang/**', 'tools/**', 'examples/**', '.dockerignore', 'composer.json', 'phpunit.xml', 'phpstan.neon', 'pint.json', 'README.md', 'AGENTS.md', 'VERSION', '.github/workflows/tests.yaml']
   pull_request:
     branches: [develop, main]
-    paths: ['src/**', 'tests/**', 'lang/**', 'tools/**', 'composer.json', 'phpunit.xml', 'phpstan.neon', 'pint.json', 'README.md', 'AGENTS.md', 'VERSION', '.github/workflows/tests.yaml']
+    paths: ['src/**', 'tests/**', 'lang/**', 'tools/**', 'examples/**', '.dockerignore', 'composer.json', 'phpunit.xml', 'phpstan.neon', 'pint.json', 'README.md', 'AGENTS.md', 'VERSION', '.github/workflows/tests.yaml']
   workflow_dispatch:
 
 permissions:
@@ -68,3 +68,24 @@ jobs:
         run: sh tools/verify-clean-app.sh
       - name: Execute source consumer-guide examples
         run: php tools/verify-documentation.php .verification/laravel
+  docker-examples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Run actual localhost HTTP examples and tear down
+        shell: sh
+        run: sh examples/laravel/test.sh
+      - name: Verify cleanup
+        if: always()
+        shell: sh
+        run: |
+          test -z "$(docker ps -aq --filter label=com.docker.compose.project=moztopia-phone-examples)"
+          test -z "$(docker network ls -q --filter label=com.docker.compose.project=moztopia-phone-examples)"
+          test -z "$(docker volume ls -q --filter label=com.docker.compose.project=moztopia-phone-examples)"
+          if curl --silent --max-time 2 http://localhost:8080/ >/dev/null; then
+            echo 'The example port is still responding.' >&2
+            exit 1
+          fi

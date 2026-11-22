@@ -1,6 +1,19 @@
 # Verification evidence
 
-Source 0.3.1 prepares the initial package for reviewed release. No Git tag, GitHub release or Packagist publication is authorized. The specification document version is 1.0; source integrations follow the numeric source policy.
+Source 0.4.0 prepares the initial package for reviewed release, including disposable agent examples. No Git tag, GitHub release or Packagist publication is authorized. The specification document version is 1.0; source integrations follow the numeric source policy.
+
+## Disposable localhost examples at source 0.4.0
+
+The owner requested two small agent recipes in one self-contained Laravel Docker application at localhost:8080, with teardown after testing and an explicit cloudflared exception. The fixture is under examples/laravel; it is not a product application scaffold and does not add SDK runtime routes or migrations. Its scoped AGENTS supplies exact execution instructions; the wiki Examples page is the authoritative walkthrough.
+
+- The final PHP 8.4.27 Alpine / Laravel 13.43.0 / libphonenumber 9.0.43 runtime passed all 14 actual HTTP cases: auto-discovery, basic SDK operations, extension preservation, Eloquent normalization/persistence/read-back, UUID identity, optional/null and mobile fields, missing/empty/invalid/mixed values, extension storage rejection and ambiguous mobile rejection.
+- The success path removed the container, network and tmpfs SQLite database. A forced host HTTP-client failure exited 42 and cleaned up; a real SIGTERM exited 143 and cleaned up. An existing manual session was refused without being stopped. Port 8080 was verified free after teardown. A localhost browser snapshot independently confirmed the JSON operations response; no browser was used for wiki work.
+- The final image was approximately 225 MiB uncompressed on this workstation. A separate build stage retains Composer/Git/compilers outside the runtime; one non-root server container uses no external database, queue or tunnel. The build still downloads normal public dependencies. Cached images remain after teardown; test data does not.
+- This workstation's Docker default address pools were exhausted. A verified unused small private subnet, 10.253.247.0/28, avoids consuming a large default pool. PHONE_EXAMPLE_SUBNET can override it when another machine has a route conflict. No unrelated Docker network was pruned or reconfigured.
+- Existing package verification passed: 97 Pest tests / 504 assertions, maximum-level PHPStan, strict Composer validation and Pint. POSIX shell syntax, Compose configuration, Actionlint and diff whitespace checks passed. The original SDK runtime source is unchanged.
+- Twenty Markdown documents, including all five wiki pages and the scoped example instructions, were rendered locally with CommonMark; 59 local/wiki/source link targets were checked. The existing executable documentation checks also cover the unchanged PHP quick-start recipes. Final source/CI/wiki revisions and integration evidence are recorded on issue #11; no unrun future checks are claimed here.
+
+The new CI job builds the actual image, exercises the published localhost port and verifies container/network/volume removal plus an unresponsive port afterward. SIGKILL, host termination or an unavailable Docker daemon cannot be repaired by a shell trap; manual down.sh cleanup remains documented. One example session runs at a time. All data uses documented synthetic examples.
 
 ## Local compatibility matrix at source 0.3.0
 

@@ -22,4 +22,6 @@ Laravel 13 auto-discovers the provider. No package configuration, migrations, se
 
 **Initial source is not yet published.** Before a tag/Packagist release is authorized, use the [local installation procedure](docs/integration-acceptance.md). Validity never proves ownership or reachability; E.164 normalization rejects extensions.
 
+Runnable agent examples: `sh examples/laravel/test.sh` builds a disposable Laravel application at localhost:8080, checks both workflows, then tears it down. See [example instructions](examples/laravel/AGENTS.md) and the authoritative [wiki Examples guide](https://github.com/moztopia/moztopia-phone/wiki/Examples).
+
 Maintainers: [contributing](CONTRIBUTING.md), [verification](docs/verification.md), [changelog](CHANGELOG.md). Apache-2.0; [LICENSE](LICENSE) and [NOTICE](NOTICE). Google does not publish or endorse this SDK.

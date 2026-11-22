@@ -1,0 +1,14 @@
+# Agent task: run the Laravel consumer examples
+
+This is an isolated integration fixture. Its authoritative walkthrough is [wiki → Examples](https://github.com/moztopia/moztopia-phone/wiki/Examples); the package [AGENTS guide](../../AGENTS.md) documents the SDK contract.
+
+1. From the repository root, run `sh examples/laravel/test.sh`. Use Docker Engine, Compose v2+ and host curl; do not install host PHP/Composer. Port 8080 must be free. Run one example session at a time. The command builds, starts, checks and tears down the fixture automatically, including after test failure or handled INT/TERM/HUP. SIGKILL or a Docker daemon outage requires later `sh examples/laravel/down.sh` cleanup.
+2. For manual inspection, run `sh examples/laravel/up.sh`, use http://localhost:8080, then always run `sh examples/laravel/down.sh`. If a manual session is present, stop it before running the automated test; the test will refuse to take it over.
+3. `GET /` confirms Composer auto-discovery. `GET /examples/basic` demonstrates facade and injected service usage: Thai normalization, international validation, formatting, classification, equality, safe parsing, extraction and preserved extensions. Successful JSON uses the standard Laravel `data` envelope.
+4. `POST /examples/contacts` accepts JSON `{"phone":"0812345678","mobile":null}`. Expect HTTP 201 and `data.phone === "+66812345678"`; `data.id` is a UUID. Read it again with `GET /examples/contacts/{id}`. Omit `mobile` or supply null for the optional field; non-null mobile must be definitively mobile.
+5. Invalid non-empty input, missing required phone, unsupported mixed values or ambiguous mobile classification produce HTTP 422 with field errors. A valid phone containing an extension also produces 422 here: `ValidPhone` accepts it, but the E.164 cast cannot store the extension. The route explicitly translates that storage exception into a field error. Preserve extensions in a separate schema when an application needs them; do not drop them.
+6. Copy the rule/model/call patterns into the consuming application, not this Docker deployment. National numbers need explicit region context. `required`/`nullable` control field presence; `ValidPhone` is non-implicit. Metadata validity never proves ownership, active service or reachability. Read the full [usage contract](https://github.com/moztopia/moztopia-phone/wiki/Usage-Guide) for limits and errors.
+
+The package is installed from a source-only Composer path snapshot during image build; no manual provider is registered. This fixture adds no SDK runtime routes or migrations. The SQLite database is tmpfs-backed and discarded on shutdown. Only `127.0.0.1:8080` is published. The owner's cloudflared exemption applies to this example only. Do not add a tunnel, UI, authentication, worker, external database or application scaffold.
+
+by-dolly

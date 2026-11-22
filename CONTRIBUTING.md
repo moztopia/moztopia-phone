@@ -7,3 +7,5 @@ Use supported PHP and run `composer install`, `composer validate --strict`, `com
 Changes use issue branches and PRs into develop. Explain scope, compatibility impact, source version and actual validation. Keep README brief; maintain the wiki through the ignored local Git checkout as the authoritative consumer documentation, then align the concise consumer AGENTS. No release/tag/publication without explicit authorization.
 
 Treat contributors respectfully, discuss evidence and behavior, and avoid personal attacks. See CODE_OF_CONDUCT.md and SECURITY.md.
+
+The committed `examples/laravel` source is a deliberate, small consumer fixture; its generated dependencies, caches and data remain untracked. Run `sh examples/laravel/test.sh` for actual localhost HTTP verification and automatic teardown. Follow its scoped agent instructions. The SDK still introduces no application routes, migrations or deployment requirements.

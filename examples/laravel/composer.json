@@ -1,0 +1,39 @@
+{
+    "name": "moztopia/phone-laravel-example",
+    "description": "Disposable localhost examples for agents integrating Moztopia Phone.",
+    "type": "project",
+    "license": "Apache-2.0",
+    "require": {
+        "php": "~8.4.27",
+        "laravel/framework": "^13.0",
+        "moztopia/phone": "@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/package",
+            "options": {
+                "symlink": false,
+                "versions": {
+                    "moztopia/phone": "dev-example"
+                }
+            }
+        }
+    ],
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "prefer-stable": true
+}

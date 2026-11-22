@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 — unreleased
+
+- Add two runnable agent recipes in one disposable Laravel Docker fixture at localhost:8080: SDK operations and validation with Eloquent storage.
+- Test actual HTTP success/error paths with automatic container, network and temporary database cleanup; keep this example explicitly exempt from cloudflared.
+- Add scoped agent instructions and authoritative wiki examples; SDK runtime behavior is unchanged.
+
 ## 0.3.1 — unreleased
 
 - Clarify Laravel facade forwarding versus direct typed-service scalar enforcement in agent instructions.

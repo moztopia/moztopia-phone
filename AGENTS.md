@@ -4,6 +4,8 @@ This is a concise integration guide for agents consuming the SDK. The [wiki agen
 
 Use `moztopia/phone` for international telephone parsing, validation, formatting, comparison and extraction in Laravel 13. Install with `composer require moztopia/phone`; auto-discovery supplies the provider. No package configuration, package-owned migration, setup command or global alias is needed. Before initial publication, follow [the local path-repository procedure](docs/integration-acceptance.md).
 
+For executable recipes from a source checkout, read [examples/laravel/AGENTS.md](examples/laravel/AGENTS.md) and run `sh examples/laravel/test.sh`. Docker starts Laravel at localhost:8080, verifies SDK calls plus validation/Eloquent storage, then removes its container, network and temporary data. Host PHP/Composer and cloudflared are not required for this explicitly exempt localhost example. The [wiki Examples guide](https://github.com/moztopia/moztopia-phone/wiki/Examples) is authoritative.
+
 ```php
 use Moztopia\Phone\Facades\Phone;
 use Moztopia\Phone\Rules\ValidPhone;

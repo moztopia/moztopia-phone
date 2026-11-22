@@ -1,0 +1,70 @@
+name: Package checks
+
+on:
+  push:
+    branches: [develop, 'wip/**']
+    paths: ['src/**', 'tests/**', 'lang/**', 'tools/**', 'composer.json', 'phpunit.xml', 'phpstan.neon', 'pint.json', 'README.md', 'AGENTS.md', 'VERSION', '.github/workflows/tests.yaml']
+  pull_request:
+    branches: [develop, main]
+    paths: ['src/**', 'tests/**', 'lang/**', 'tools/**', 'composer.json', 'phpunit.xml', 'phpstan.neon', 'pint.json', 'README.md', 'AGENTS.md', 'VERSION', '.github/workflows/tests.yaml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phone-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3.36', '8.4.27', '8.5.13']
+        dependencies: [lowest, latest]
+    name: PHP ${{ matrix.php }} / ${{ matrix.dependencies }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ctype, dom, mbstring, pdo_sqlite, xml, xmlwriter
+          coverage: none
+          tools: composer:v2
+      - name: Resolve compatible dependencies
+        env:
+          PHONE_DEPENDENCIES: ${{ matrix.dependencies }}
+        shell: sh
+        run: |
+          if [ "$PHONE_DEPENDENCIES" = lowest ]; then
+            composer update --prefer-lowest --prefer-stable --no-interaction --prefer-dist
+          else
+            composer update --prefer-stable --no-interaction --prefer-dist
+          fi
+      - run: composer validate --strict
+      - run: composer test
+      - run: composer analyse
+      - run: composer lint
+  clean-application:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4.27'
+          extensions: ctype, dom, mbstring, pdo_sqlite, xml, xmlwriter
+          coverage: none
+          tools: composer:v2
+      - name: Install and verify in a genuinely clean Laravel application
+        shell: sh
+        run: sh tools/verify-clean-app.sh
+      - name: Execute source consumer-guide examples
+        run: php tools/verify-documentation.php .verification/laravel

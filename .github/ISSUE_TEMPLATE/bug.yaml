@@ -1,0 +1,18 @@
+name: Bug report
+description: Report incorrect SDK behavior with synthetic input.
+title: 'Bug: '
+labels: [bug, 'area:sdk']
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+      description: Use upstream example numbers or synthetic fixtures; never paste personal telephone data.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: PHP, Laravel and package/dependency versions
+    validations:
+      required: true

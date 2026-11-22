@@ -1,43 +1,25 @@
 # Moztopia Phone
 
-Small tools. Powerful AI.
+**Small tools. Powerful AI.** A headless Laravel SDK for international telephone-number parsing, validation, normalization, formatting, comparison and extraction, powered by libphonenumber-for-php.
 
-A strict international telephone-number SDK for Laravel 13, powered by `giggsey/libphonenumber-for-php` 9.x. This source is in development; it has not been tagged or published to Packagist.
+The **[wiki is the authoritative documentation](https://github.com/moztopia/moztopia-phone/wiki)**. **AI agents: start with [AGENTS.md](AGENTS.md), then the [agent integration instructions](https://github.com/moztopia/moztopia-phone/wiki/Agent-Integration).** The [usage guide](https://github.com/moztopia/moztopia-phone/wiki/Usage-Guide) covers the complete API, input policy, extensions, errors, validation, casting and extraction limits.
 
-The implemented core can be used directly:
+## Quick start
 
-```php
-use Moztopia\Phone\PhoneService;
-
-$phone = new PhoneService();
-$phone->normalize('0812345678', 'TH'); // '+66812345678'
-$phone->isValid('+66812345678'); // true
-$parsed = $phone->parse('+16502530000 ext. 0012');
-$parsed->rfc3966(); // 'tel:+1-650-253-0000;ext=0012'
+```sh
+composer require moztopia/phone
 ```
 
-Service E.164 normalization rejects extensions; the parsed object's `e164()` deliberately returns only its main number. Region arguments supply context, not country restrictions. Validity never proves assignment, ownership or reachability.
-
-Laravel integration is implemented through automatic provider discovery, `Moztopia\Phone\Facades\Phone`, and constructor-injected `Moztopia\Phone\PhoneService`.
-
 ```php
-use Moztopia\Phone\Rules\ValidPhone;
-use Moztopia\Phone\Casts\E164Phone;
+use Moztopia\Phone\Facades\Phone;
 
-$rules = ['phone' => ['required', new ValidPhone(region: 'TH')]];
-$optional = ['phone' => ['nullable', new ValidPhone(region: 'TH', mobileOnly: true)]];
-// In an existing Eloquent model's casts() array:
-$casts = ['phone' => E164Phone::class . ':TH'];
+Phone::normalize('0812345678', 'TH'); // '+66812345678'
+Phone::isValid('+66812345678'); // true
+Phone::format('0812345678', 'national', 'TH'); // '081 234 5678'
 ```
 
-`ValidPhone` is non-implicit: Laravel controls whether empty or missing values are checked. Use `required` for mandatory fields and `nullable` for nulls. Package messages default to English and support normal host overrides under `lang/vendor/moztopia-phone/en/validation.php`.
+Laravel 13 auto-discovers the provider. No package configuration, migrations, setup command, external service or global alias is required. Requires supported PHP 8.3.36+, 8.4.27+ or 8.5.12+ and `ctype`/`mbstring`; [verification evidence](docs/verification.md) records actual tested environments.
 
-The cast accepts strings or null, rejects extensions and invalid values, and returns `string|null`. Retrieval checks only canonical ASCII E.164 shape using `\A\+[1-9][0-9]{1,14}\z`; it never revalidates stored numbers against current metadata. Raw SQL and bulk writes can bypass casts.
+**Initial source is not yet published.** Before a tag/Packagist release is authorized, use the [local installation procedure](docs/integration-acceptance.md). Validity never proves ownership or reachability; E.164 normalization rejects extensions.
 
-Complete consumer documentation, clean-app discovery and the full compatibility matrix remain tracked in #5. See [the implementation specification](docs/implementation-specification.md) and [extraction feasibility evidence](docs/extraction-feasibility.md).
-
-Run `composer install`, `composer test`, `composer analyse` and `composer lint` in an isolated supported PHP environment. The intentionally weak-typing caller fixture is excluded from automatic strict-type formatting. Dependencies and lockfiles are local and untracked.
-
-Source PHP constraints preserve the shared security floors: 8.3.36+, 8.4.27+ or 8.5.12+ within each line. Initial local core verification used PHP 8.4.27; the remaining compatibility matrix is pending.
-
-Apache-2.0. libphonenumber-for-php is independently maintained; Google does not publish or endorse this package.
+Maintainers: [contributing](CONTRIBUTING.md), [verification](docs/verification.md), [changelog](CHANGELOG.md). Apache-2.0; [LICENSE](LICENSE) and [NOTICE](NOTICE). Google does not publish or endorse this SDK.

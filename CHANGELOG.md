@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 — unreleased
+
+- Add compatibility CI, isolated PHP CLI testing, clean Laravel installation verification and independent-agent acceptance guidance.
+- Keep README brief and place complete consumer documentation in the locally maintained wiki, per owner clarification.
+- Add consumer AGENTS, contribution/security guidance and retained Apache license notices.
+
 ## 0.2.0 — unreleased
 
 - Add Laravel provider discovery metadata, shared facade/DI resolution, non-implicit validation with translated messages, and E.164 casting with stable structural reads.

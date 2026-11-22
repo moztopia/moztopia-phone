@@ -1,0 +1,7 @@
+.git
+vendor
+wiki
+.verification
+composer.lock
+.phpunit.cache
+.phpstan-cache

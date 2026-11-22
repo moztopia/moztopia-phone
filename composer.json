@@ -65,5 +65,18 @@
                 "Moztopia\\Phone\\PhoneServiceProvider"
             ]
         }
+    },
+    "archive": {
+        "exclude": [
+            "/.git",
+            "/.verification",
+            "/vendor",
+            "/wiki",
+            "/composer.lock",
+            "/.phpunit.cache",
+            "/.phpunit.result.cache",
+            "/.phpstan-cache",
+            "/.env"
+        ]
     }
 }

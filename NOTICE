@@ -1,0 +1,10 @@
+Moztopia Phone
+Copyright 2026 Moztopia
+
+This product uses giggsey/libphonenumber-for-php, maintained by Joshua Gigg,
+a PHP port of Google's libphonenumber. Those projects are licensed under
+Apache License 2.0. Their maintained numbering metadata is used without
+independent country-rule implementation. Google does not endorse this SDK.
+
+The distributed Composer dependencies retain their own licenses and notices.
+Copies of the inspected engine and locale licenses are in docs/licenses/.
